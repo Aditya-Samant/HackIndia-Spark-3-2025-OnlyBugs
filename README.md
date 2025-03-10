@@ -4,10 +4,26 @@
 The Certificate NFT System is a decentralized application (dApp) that allows users to issue, verify, and view certificates as Non-Fungible Tokens (NFTs) on the Ethereum blockchain. The application leverages IPFS for storing certificate data and utilizes the Pinata service for file uploads.
 
 ## Project Flow
-1. **User Registration**: Users connect their Ethereum wallets to the application.
-2. **Issuing Certificates**: Authorized issuers can upload certificate files (PDFs) and issue certificates to recipients. The certificate data is stored on IPFS, and the IPFS hash is saved on the blockchain as an NFT.
-3. **Verifying Certificates**: Users can verify the authenticity of certificates by entering the token ID. The application fetches the certificate details from the blockchain and displays them.
-4. **Viewing Certificates**: Users can view all certificates they own, along with their details.
+
+1. **User Registration**:
+   - **Connect Wallet**: Users begin by connecting their Ethereum wallets (e.g., MetaMask) to the application. This allows them to interact with the Ethereum blockchain and manage their NFTs.
+   - **Account Management**: Once connected, the application retrieves the user's Ethereum account address, which is used for issuing and verifying certificates.
+
+2. **Issuing Certificates**:
+   - **Authorized Issuers**: Only users designated as issuers (e.g., educators or organizations) can issue certificates. The owner of the smart contract (usually the admin) can set or remove issuers using the `setIssuer` function in the smart contract.
+   - **Upload Certificate Files**: Authorized issuers can upload certificate files (typically in PDF format) through a user-friendly interface. The application uses a file input to allow issuers to select and upload their certificate files.
+   - **Store Metadata on IPFS**: When a certificate is issued, the application uploads the certificate file to IPFS using the Pinata service. The IPFS hash (a unique identifier for the file) is then stored on the Ethereum blockchain as part of the NFT.
+   - **Minting the NFT**: The smart contract mints a new NFT representing the certificate, associating it with the recipient's Ethereum address. The NFT contains metadata such as the IPFS hash, issuer address, course name, and issuance date.
+
+3. **Verifying Certificates**:
+   - **Input Token ID**: Users can verify the authenticity of a certificate by entering its token ID into the verification form.
+   - **Fetch Certificate Details**: Upon submission, the application calls the smart contract's `getCertificate` function, which retrieves the certificate details from the blockchain, including the IPFS hash, issuer, course name, and issuance date.
+   - **Display Certificate Information**: The application displays the retrieved certificate information to the user, allowing them to confirm its authenticity.
+
+4. **Viewing Certificates**:
+   - **List User's Certificates**: Users can view all certificates they own by accessing the "My Certificates" section of the application. The application queries the smart contract to get the balance of NFTs owned by the user.
+   - **Fetch Certificate Data**: For each NFT owned, the application retrieves the corresponding certificate details from the blockchain and displays them in a user-friendly format.
+   - **View Certificate on IPFS**: Users can click on a link to view the certificate file stored on IPFS, which opens the certificate in a new tab.
 
 ## Technologies Used
 - **Solidity**: Smart contract development for the Ethereum blockchain.
