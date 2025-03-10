@@ -102,5 +102,3 @@ The Certificate NFT System is a decentralized application (dApp) that allows use
 9. **Access the Application**:
    Open your browser and navigate to `http://localhost:3000` to access the Certificate NFT System.
 
-## License
-This project is licensed under the MIT License.
