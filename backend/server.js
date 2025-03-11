@@ -42,12 +42,15 @@ const uploadToPinata = async (fileBuffer, fileName) => {
 
         const response = await request.json();
         console.log("Pinata Response:", response); // Log the entire response
-        if (!response.IpfsHash) {
+
+        // Check for the correct field in the response
+        if (!response.data || !response.data.cid) {
             throw new Error('Failed to upload to Pinata');
         }
 
-        console.log("Pinata Upload Successful. Hash:", response.IpfsHash);
-        return response.IpfsHash; // Return the CID
+        const ipfsHash = response.data.cid; // Use the CID from the response
+        console.log("Pinata Upload Successful. Hash:", ipfsHash);
+        return ipfsHash; // Return the CID
     } catch (error) {
         console.error("Pinata Upload Error:", error);
         throw new Error('Pinata upload failed');
