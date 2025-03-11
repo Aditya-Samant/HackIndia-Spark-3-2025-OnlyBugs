@@ -84,6 +84,39 @@ app.post('/api/upload', upload.single('certificate'), async (req, res) => {
     }
 });
 
+// New endpoint to fetch certificate file from IPFS
+app.get('/api/certificate/:ipfsHash', async (req, res) => {
+    try {
+        const { ipfsHash } = req.params;
+        
+        // Fetch the file from Pinata's gateway
+        const response = await fetch(`https://gateway.pinata.cloud/ipfs/${ipfsHash}`, {
+            headers: {
+                Authorization: `Bearer ${JWT}`,
+            },
+        });
+        
+        if (!response.ok) {
+            throw new Error('Failed to fetch certificate from IPFS');
+        }
+        
+        // Get the content type from the response
+        const contentType = response.headers.get('content-type');
+        
+        // Set the appropriate content type for the response
+        res.setHeader('Content-Type', contentType || 'application/pdf');
+        
+        // Pipe the response to the client
+        response.body.pipe(res);
+    } catch (error) {
+        console.error('Fetch Error:', error);
+        res.status(500).json({
+            success: false,
+            error: error.message
+        });
+    }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);

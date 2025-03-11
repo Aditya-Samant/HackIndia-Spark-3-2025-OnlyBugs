@@ -134,6 +134,16 @@ function ViewCertificates() {
                                     >
                                         View Certificate
                                     </Button>
+
+                                    <Button 
+                                        variant="outlined" 
+                                        component={Link}
+                                        to={`/manage-access/${cert.tokenId}`}
+                                        sx={{ mt: 1 }}
+                                        fullWidth
+                                    >
+                                        Manage Access
+                                    </Button>
                                 </CardContent>
                             </Card>
                         </Grid>
